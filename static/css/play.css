@@ -1,0 +1,19 @@
+.border{
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+  
+.videos{
+    object-fit: contain;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.body-style {
+    height: 100%;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}

@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.thumbnail-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.thumbnail-box {
+    width: 180px;
+    margin: 5px; /* Adjust the margin to make the space between thumbnails narrower */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.thumbnail-box a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.thumbnail-img {
+    width: 100%;
+    height: auto;
+    max-height: 113px; /* Set a maximum height for a 16:9 aspect ratio (width / 16 * 9) */
+    object-fit: contain;
+}
+
+.thumbnail-title {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+}

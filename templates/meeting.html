@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+  </head>
+  <body>
+    <script>
+        let socket = io();
+        socket.on('connect', function() {
+            socket.emit('server_echo', {data: 'client connected!'});
+        });
+
+        socket.on('client_echo', function(data) {
+            console.log("echo" + ': ' + data.msg);
+        });
+
+        socket.on('leave', function(data) {
+            console.log("room" + ': ' + data.msg);
+        });
+
+        socket.on('join', function(data) {
+            console.log("room" + ': ' + data.msg);
+        });
+
+        socket.on('put_data', function(data) {
+            console.log("put_data" + ': ' + data.message);
+            document.getElementById("data").innerHTML = data.message;
+        });
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+        var socket = io.connect(
+            "http://" + document.domain + ":" + location.port
+        );
+
+        let room_id_onload = "{{ room }}"
+
+        if (room_id_onload) {
+            socket.emit('join', {room: room_id_onload});
+        }else{
+            console.log('No room_id')
+        }
+
+        socket.on("receive_message", function (data) {
+            console.log(data)
+            const messageBox = document.getElementById("messages");
+            messageBox.innerHTML += "<p><b>Bot:</b> " + data.message + "</p>";
+        });
+
+        document
+            .getElementById("send-button")
+            .addEventListener("click", function () {
+            const userMessage = document.getElementById("user-message").value;
+            const room_id = document.getElementById("room_id").innerText;
+
+            socket.emit("send_message", { message: userMessage ,room: room_id});
+
+            document.getElementById("user-message").value = "";
+            });
+
+        document
+            .getElementById("join-room")
+            .addEventListener("click", function () {
+            let leave_id = document.getElementById("room_id").innerText;
+
+            if (leave_id){
+                socket.emit('leave', {room: leave_id});
+            }
+
+            let join_id = document.getElementById("room-id-change").value;
+
+            window.location.href = '/chat/' + join_id;
+            });
+        });
+    </script>
+
+    <h2>Chatbot</h2>
+    <p id="room_id">{{ room }}</p>
+    <div id="messages"></div>
+    <textarea id="user-message"></textarea>
+    <button id="send-button">Send</button>
+    <br>
+    <textarea id="room-id-change"></textarea>
+    <button id="join-room">join</button>
+
+    <h1 id="data"></h1>
+  </body>
+</html>
+

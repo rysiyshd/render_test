@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>メイン</title>
+</head>
+<body>
+
+    <div>ルームID : <textarea id="room-id"></textarea></div>
+    <button id="join-room">join</button>
+
+    <script>
+        document
+            .getElementById("join-room")
+            .addEventListener("click", function () {
+
+            let join_id = document.getElementById("room-id").value;
+
+            window.location.href = '/chat/' + join_id;
+            });
+    </script>
+</body>
+</html>
